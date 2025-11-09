@@ -119,6 +119,8 @@ if 'view' in query_params:
 if 'preview' in query_params:
     # Auto-open preview modal for specific VIN
     st.session_state.preview_vin = query_params['preview']
+    if 'logged_in' not in st.session_state:
+        st.session_state.logged_in = False
     if not st.session_state.logged_in:
         st.session_state.logged_in = True
         st.session_state.user_email = "demo@ponsauto.com"
