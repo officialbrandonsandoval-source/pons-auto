@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: shiftly
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: shiftly
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - shiftly-network
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - shiftly-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://shiftly:${POSTGRES_PASSWORD:-changeme}@postgres:5432/shiftly
+      REDIS_URL: redis://redis:6379/0
+      ENVIRONMENT: production
+      LOG_LEVEL: INFO
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - shiftly-network
+    restart: unless-stopped
+
+  celery-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    environment:
+      DATABASE_URL: postgresql://shiftly:${POSTGRES_PASSWORD:-changeme}@postgres:5432/shiftly
+      REDIS_URL: redis://redis:6379/0
+      ENVIRONMENT: production
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - shiftly-network
+    restart: unless-stopped
+    command: celery -A shiftly.tasks worker --loglevel=info
+
+  celery-beat:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    environment:
+      DATABASE_URL: postgresql://shiftly:${POSTGRES_PASSWORD:-changeme}@postgres:5432/shiftly
+      REDIS_URL: redis://redis:6379/0
+      ENVIRONMENT: production
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - shiftly-network
+    restart: unless-stopped
+    command: celery -A shiftly.tasks beat --loglevel=info
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  shiftly-network:
+    driver: bridge

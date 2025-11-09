@@ -1,0 +1,6 @@
+alerts:
+  posting_failure_rate_threshold_pct: 10
+  account_warning_rate_threshold: 3
+  proxy_failure_rate_threshold_pct: 15
+  abnormal_pattern_detection_window_minutes: 60
+  auto_pause_on_threshold_breach: true

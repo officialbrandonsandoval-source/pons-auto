@@ -1,0 +1,116 @@
+name: Shiftly Auto CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: test_shiftly
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+        pip install -e .
+    
+    - name: Lint with ruff
+      run: |
+        pip install ruff
+        ruff check src/
+    
+    - name: Type check with mypy
+      run: |
+        pip install mypy
+        mypy src/shiftly --ignore-missing-imports
+      continue-on-error: true
+    
+    - name: Run tests with pytest
+      env:
+        DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_shiftly
+        REDIS_URL: redis://localhost:6379/0
+        API_KEYS: test-key-123
+      run: |
+        pytest tests/ -v --cov=shiftly --cov-report=xml --cov-report=html
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        files: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+    
+    - name: Security check with bandit
+      run: |
+        pip install bandit
+        bandit -r src/shiftly -ll
+      continue-on-error: true
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    
+    - name: Build Docker image
+      run: |
+        docker build -f Dockerfile.prod -t shiftly-auto:latest .
+    
+    - name: Test Docker image
+      run: |
+        docker run --rm shiftly-auto:latest python -c "import shiftly; print('OK')"
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Deploy to production
+      run: |
+        echo "Deployment step - configure for your infrastructure"
+        # Add deployment commands here
+        # e.g., deploy to AWS, GCP, Azure, etc.

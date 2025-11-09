@@ -1,0 +1,76 @@
+# ===================================
+# PONS AUTO .gitignore (PRODUCTION READY)
+# ===================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Database
+pons_auto.db
+*.db
+*.sqlite3
+
+# Streamlit
+.streamlit/secrets.toml
+.streamlit/config.toml
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build/Deploy
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Logs
+logs/
+*.log
+
+# Sensitive
+keys/
+secrets/
+*.pem
+*.key

@@ -1,0 +1,29 @@
+{
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/__pycache__",
+    ".venv",
+    "venv",
+    "dashboard"
+  ],
+  "extraPaths": [
+    ".venv/lib/python3.9/site-packages",
+    "src"
+  ],
+  "typeCheckingMode": "off",
+  "reportMissingImports": "none",
+  "reportMissingTypeStubs": "none",
+  "reportUnknownParameterType": "none",
+  "reportUnknownArgumentType": "none",
+  "reportUnknownVariableType": "none",
+  "reportUnknownMemberType": "none",
+  "reportMissingTypeArgument": "none",
+  "reportGeneralTypeIssues": "none",
+  "reportOptionalMemberAccess": "none",
+  "reportOptionalSubscript": "none",
+  "reportPrivateImportUsage": "none",
+  "stubPath": ""
+}

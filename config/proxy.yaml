@@ -1,0 +1,7 @@
+proxy:
+  pool_type: residential
+  rotate_every_request: true
+  max_requests_per_proxy_per_minute: 8
+  max_concurrent_connections_per_proxy: 2
+  geolocation_match: true
+  health_check_interval_seconds: 60

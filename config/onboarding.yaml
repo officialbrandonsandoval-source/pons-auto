@@ -1,0 +1,5 @@
+onboarding_requirements:
+  min_account_age_days: 7
+  require_phone_verified: true
+  require_2fa_recommended: true
+  max_initial_posts_first_7_days: 5

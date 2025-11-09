@@ -1,0 +1,4 @@
+tokens:
+  token_ttl_seconds: 3600
+  refresh_threshold_seconds: 300
+  max_simultaneous_tokens_per_account: 2

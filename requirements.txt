@@ -1,0 +1,46 @@
+# Streamlit Dashboard (for Streamlit Cloud deployment)
+streamlit==1.29.0
+pandas==2.1.4
+plotly==5.18.0
+streamlit-option-menu==0.3.6
+streamlit-cropper>=0.2.1
+
+# Core dependencies
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.4.0
+pydantic-settings>=2.0.0
+httpx>=0.25.0
+redis>=5.0.0
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.0
+alembic>=1.12.0
+prometheus-client>=0.18.0
+python-json-logger>=2.0.0
+pyyaml>=6.0.0
+celery>=5.3.0
+python-multipart>=0.0.6
+gunicorn>=21.2.0
+requests>=2.31.0
+
+# Image processing (Option J)
+Pillow>=10.0.0
+boto3>=1.28.0
+openai>=1.0.0
+
+# Authentication & Security
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+python-multipart>=0.0.6
+
+# Payments
+stripe>=7.0.0
+
+# Email (Option J)
+jinja2>=3.1.0
+
+# Testing & Quality (Option K)
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+locust>=2.16.0

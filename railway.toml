@@ -1,0 +1,29 @@
+# Railway Deployment Configuration
+
+# 1. Install Railway CLI
+# npm install -g @railway/cli
+
+# 2. Login to Railway
+# railway login
+
+# 3. Create new project
+# railway init
+
+# 4. Add PostgreSQL
+# railway add postgresql
+
+# 5. Add Redis  
+# railway add redis
+
+# 6. Set environment variables (copy from .env.example and update values)
+# railway variables set JWT_SECRET_KEY=your-secret-key
+# railway variables set STRIPE_SECRET_KEY=sk_live_...
+# railway variables set OPENAI_API_KEY=sk-...
+
+# 7. Deploy
+# railway up
+
+# After deployment, Railway will provide:
+# - Backend URL: https://your-app.railway.app
+# - PostgreSQL connection string (auto-injected as DATABASE_URL)
+# - Redis connection string (auto-injected as REDIS_URL)

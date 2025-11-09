@@ -1,0 +1,8 @@
+streamlit==1.29.0
+requests==2.31.0
+pandas==2.1.4
+plotly==5.18.0
+streamlit-option-menu==0.3.6
+Pillow>=10.0.0
+streamlit-cropper>=0.2.1
+openai>=1.0.0

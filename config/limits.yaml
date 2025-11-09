@@ -1,0 +1,6 @@
+per_dealer_limits:
+  max_posts_per_day: 25
+  max_posts_per_hour: 5
+  min_interval_between_posts_seconds: 600
+  burst_capacity: 2
+  cooldown_window_on_error_minutes: 60
