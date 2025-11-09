@@ -7,7 +7,6 @@ Works on iOS, Android browsers, and desktop
 import streamlit as st
 import requests
 from datetime import datetime
-import pandas as pd
 from PIL import Image
 from io import BytesIO
 import base64
@@ -368,7 +367,7 @@ def show_vehicles_tab():
     """Vehicle list with search and filters"""
     
     # Check for deep link to specific vehicle
-    query_params = st.query_params
+    query_params = st.experimental_get_query_params()
     selected_vin = query_params.get('vin', None)
     
     # Check for preview modal trigger
