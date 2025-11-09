@@ -108,7 +108,7 @@ if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
 
 # Deep linking support - check query params
-query_params = st.query_params
+    query_params = st.experimental_get_query_params()
 if 'vin' in query_params and not st.session_state.logged_in:
     # Auto-login to demo mode if VIN is in URL
     st.session_state.logged_in = True
