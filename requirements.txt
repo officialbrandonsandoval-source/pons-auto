@@ -1,8 +1,8 @@
-# Streamlit Dashboard - Minimal dependencies for deployment
+# Streamlit Dashboard Dependencies
 streamlit==1.29.0
-pandas==2.1.4
+pandas>=2.2.0
 plotly==5.18.0
 requests==2.31.0
-Pillow==10.0.0
-openai==1.3.0
+Pillow>=10.0.0
+openai>=1.3.0
 streamlit-cropper==0.2.1
